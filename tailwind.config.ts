@@ -18,6 +18,7 @@ const config: Config = {
         grayPrimary: "#717171",
         graySecondary: "#BBBFBF",
         grayLighter: "#BBBFBF",
+        walterWhite: "#F5F5F5",
       },
       textColor: {
         dark: "#717171",

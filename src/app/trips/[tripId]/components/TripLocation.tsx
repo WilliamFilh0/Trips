@@ -30,7 +30,7 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
       <p className="text-xs text-primaryDark mt-2 leading-5">
         {locationDescription}
       </p>
-      <Button variant="outlined" className="w-ful mt-5">
+      <Button variant="outlined" className="w-full mt-5">
         Ver no Google Maps
       </Button>
     </div>
