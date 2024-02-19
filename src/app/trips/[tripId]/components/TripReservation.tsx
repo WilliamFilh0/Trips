@@ -7,7 +7,6 @@ import { differenceInDays } from "date-fns";
 import { Trip } from "@prisma/client";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { error } from "console";
 
 interface TripReservationProps {
   tripId: String;
@@ -53,14 +52,14 @@ const TripReservation = ({
 
     const res = await response.json();
 
-    console.log({ res });
+    //console.log({ res });
 
     if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
       setError("startDate", {
         type: "manual",
         message: "Esta data já está reservada. ",
       });
-      setError("endDate", {
+      return setError("endDate", {
         type: "manual",
         message: "Esta data já está reservada.",
       });
@@ -74,7 +73,7 @@ const TripReservation = ({
     }
 
     if (res?.error?.code === "INVALID_END_DATE") {
-      setError("endDate", {
+      return setError("endDate", {
         type: "manual",
         message: "Data Invalida. ",
       });
@@ -139,11 +138,16 @@ const TripReservation = ({
             value: true,
             message: "Número de hóspedes é obrigatório.",
           },
+          max: {
+            value: maxGuests,
+            message: `Número de hóspedes não podem ser maior que ${maxGuests}.`,
+          },
         })}
         placeholder={`Numero de hospespedes (max: ${maxGuests})`}
         className="mt-4"
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
+        type="number"
       />
       <div className="flex justify-between mt-3">
         <p className="font-medium text-sm text-primaryDark">Total: </p>
