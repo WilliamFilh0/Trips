@@ -1,4 +1,4 @@
-import QuickSearch from "./components/QuickSearcyh";
+import QuickSearch from "./components/QuickSearch";
 import TripSearch from "./components/TripSearch";
 import RecommendedTrips from "./components/RecommendedTrips";
 
