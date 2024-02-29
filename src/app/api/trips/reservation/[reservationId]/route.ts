@@ -4,20 +4,44 @@ import { NextResponse } from "next/server";
 export async function DELETE(
   _request: Request,
   { params: { reservationId } }: { params: { reservationId: string } }
-) {
+): Promise<Response> {
   if (!reservationId) {
-    return {
-      body: {
+    return new Response(
+      JSON.stringify({
         message: "Missing reservationId",
-      },
-    };
+      }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 
-  const reservation = await prisma.tripReservation.delete({
-    where: {
-      id: reservationId,
-    },
-  });
+  try {
+    await prisma.tripReservation.delete({
+      where: {
+        id: reservationId,
+      },
+    });
 
-  return new NextResponse(JSON.stringify(reservation), { status: 200 });
+    return new Response(JSON.stringify({}), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Error deleting reservation:", error);
+    return new Response(
+      JSON.stringify({ message: "Error deleting reservation" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
 }
