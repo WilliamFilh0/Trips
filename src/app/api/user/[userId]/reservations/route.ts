@@ -22,5 +22,5 @@ export async function GET(
     },
   })
 
-  return new Response(JSON.stringify(reservations), { status: 200 })
+  return new NextResponse(JSON.stringify(reservations), { status: 200 })
 }
