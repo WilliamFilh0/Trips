@@ -1,19 +1,16 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { prisma } from '@/lib/prisma'
+import { NextResponse } from 'next/server'
 
 export async function GET(
   request: Request,
   { params: { userId } }: { params: { userId: string } }
-) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
+): Promise<void | Response> {
+  const { searchParams } = new URL(request.url)
 
   if (!userId) {
-    return {
-      body: {
-        message: "Missing userId",
-      },
-    };
+    return new Response(JSON.stringify({
+      message: 'Missing userId',
+    }), { status: 400 })
   }
 
   const reservations = await prisma.tripReservation.findMany({
@@ -23,7 +20,7 @@ export async function GET(
     include: {
       trip: true,
     },
-  });
+  })
 
-  return new NextResponse(JSON.stringify(reservations), { status: 200 });
+  return new Response(JSON.stringify(reservations), { status: 200 })
 }
