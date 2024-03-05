@@ -51,4 +51,4 @@ const Trips = () => {
   );
 };
 
-export default Trips;
+//export default Trips;
